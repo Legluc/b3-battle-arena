@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Tournoi Shifumi{% endblock %}
+
+{% block body %}
+<div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Créer un compte</h1>
+
+    {{ form_start(form, { attr: { 'data-turbo': 'true', 'class': 'space-y-4' } }) }}
+        {{ form_row(form.nom, { label: 'Nom', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        {{ form_row(form.mail, { label: 'Email', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        {{ form_row(form.ddn, { label: 'Date de naissance', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        {{ form_row(form.password, { label: 'Mot de passe', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:cursor-pointer hover:bg-green-700">
+            S'inscrire
+        </button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mes informations - {{ joueur.nom }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-2xl font-bold mb-6">Modifier mes informations</h1>
+
+    {{ form_start(form, { attr: { class: 'space-y-4' } }) }}
+        {{ form_row(form.nom, { label: 'Nom', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        {{ form_row(form.mail, { label: 'Email', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        {{ form_row(form.ddn, { label: 'Date de naissance', attr: { class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm' } }) }}
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Mettre à jour
+        </button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
