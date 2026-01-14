@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RegistrationController extends AbstractController
 {
@@ -17,14 +19,14 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher
+        UserPasswordHasherInterface $passwordHasher,
+        JWTTokenManagerInterface $jwtManager
     ): Response {
         $joueur = new Joueur();
         $form = $this->createForm(JoueurType::class, $joueur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Hash du mot de passe
             $joueur->setPassword(
                 $passwordHasher->hashPassword($joueur, $form->get('password')->getData())
             );
@@ -32,7 +34,12 @@ class RegistrationController extends AbstractController
             $entityManager->persist($joueur);
             $entityManager->flush();
 
-            // Redirection obligatoire pour Turbo
+            $token = $jwtManager->create($joueur);
+
+            if ($request->isXmlHttpRequest() || $request->headers->get('Accept') === 'application/json') {
+                return new JsonResponse(['token' => $token]);
+            }
+
             return $this->redirectToRoute('app_login');
         }
 

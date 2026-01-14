@@ -1,0 +1,5 @@
+gesdinet_jwt_refresh_token:
+    ttl: 3600  
+    ttl_update: true  
+    user_identity_field: mail  
+    manager_type: doctrine 

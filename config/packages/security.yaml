@@ -37,8 +37,14 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+
             logout:
                 path: app_logout
+                
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 3600
+                path: /
 
 
     # Règles d'accès
@@ -48,6 +54,7 @@ security:
         - { path: ^/joueur/\d+, roles: ROLE_PLAYER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
         - { path: ^/api/tournois/public, roles: PUBLIC_ACCESS }
         - { path: ^/api/joueurs, roles:  PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
