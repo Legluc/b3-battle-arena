@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/joueurs', name: 'api_joueur_')]
 class JoueurApiController extends AbstractController
 {
     // Lister tous les joueurs (GET)
     #[Route('', name: 'index', methods: ['GET'])]
+    #[IsGranted('ROLE_PLAYER', message: 'Vous devez être un connecté en tant que joueur pour effectué cette action.')]
     public function index(EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
     {
         $joueurs = $entityManager->getRepository(Joueur::class)->findAll();
@@ -62,6 +64,7 @@ class JoueurApiController extends AbstractController
 
     // Afficher un joueur (GET)
     #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[IsGranted('ROLE_PLAYER', message: 'Vous devez être un connecté en tant que joueur pour effectué cette action.')]
     public function show(Joueur $joueur, SerializerInterface $serializer): JsonResponse
     {
         $json = $serializer->serialize($joueur, 'json', ['groups' => 'joueur:read']);
@@ -70,6 +73,7 @@ class JoueurApiController extends AbstractController
 
     // Modifier un joueur (PUT)
     #[Route('/{id}', name: 'edit', methods: ['PUT'])]
+    #[IsGranted('ROLE_PLAYER', message: 'Vous devez être un connecté en tant que joueur pour effectué cette action.')]
     public function edit(Request $request, Joueur $joueur, EntityManagerInterface $entityManager, SerializerInterface $serializer): JsonResponse
     {
         $json = $request->getContent();
@@ -81,6 +85,7 @@ class JoueurApiController extends AbstractController
     }
 
     // Supprimer un joueur (DELETE)
+    #[IsGranted('ROLE_ADMIN', message: 'Vous devez être un connecté en tant que administrateur pour effectué cette action.')]
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Joueur $joueur, EntityManagerInterface $entityManager): JsonResponse
     {
