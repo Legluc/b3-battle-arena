@@ -1,20 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RencontreController!{% endblock %}
+{% block title %}Détails du match #{{ rencontre.id }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-2xl font-bold mb-6">Détails du match #{{ rencontre.id }}</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {# Informations de la rencontre #}
+    <div class="mb-6 p-4 bg-gray-100 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">Informations du match</h2>
+        <p><strong>Joueur 1</strong> {{ rencontre.joueur1.nom }}</p>
+        <p><strong>Joueur 2</strong> {{ rencontre.joueur2.nom }}</p>
+        <p><strong>Vainqueur</strong> {{ rencontre.gagnant ? rencontre.gagnant.nom : 'Non déterminé' }}</p>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/PC 2/Local Sites/shifumi_tournament/src/Controller/RencontreController.php</code></li>
-        <li>Your template at <code>C:/Users/PC 2/Local Sites/shifumi_tournament/templates/rencontre/index.html.twig</code></li>
-    </ul>
+    <div class="mt-6">
+        <a href="{{ path('rencontre_edit', {'id': rencontre.id}) }}" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 block text-center">
+            Modifier les informations du match
+        </a>
+    </div>
 </div>
 {% endblock %}

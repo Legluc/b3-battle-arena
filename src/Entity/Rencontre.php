@@ -6,6 +6,8 @@ use App\Repository\RencontreRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
+
 
 #[ORM\Entity(repositoryClass: RencontreRepository::class)]
 class Rencontre
@@ -13,19 +15,23 @@ class Rencontre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['rencontre:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Joueur::class, inversedBy: 'rencontres')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "Le joueur 1 ne peut pas être vide.")]
+    #[Groups(['rencontre:read', 'rencontre:write'])]
     private ?Joueur $joueur1 = null;
     
     #[ORM\ManyToOne(targetEntity: Joueur::class, inversedBy: 'rencontres')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotBlank(message: "Le joueur 2 ne peut pas être vide.")]
+        #[Groups(['rencontre:read', 'rencontre:write'])]
     private ?Joueur $joueur2 = null;
 
     #[ORM\ManyToOne(targetEntity: Joueur::class, inversedBy: 'rencontres')]
+    #[Groups(['rencontre:read', 'rencontre:write'])]
     private ?Joueur $gagnant = null;
 
     public function validateJoueurs(ExecutionContextInterface $context)

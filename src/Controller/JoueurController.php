@@ -49,7 +49,7 @@ class JoueurController extends AbstractController
     #[Route('/{id}', name: 'app_joueur_show', requirements: ['id' => '\d+'])]
     public function show(Joueur $joueur): Response
     {        
-        return $this->render('joueur/show.html.twig', [
+        return $this->render('joueur/index.html.twig', [
             'joueur' => $joueur,
         ]);
     }

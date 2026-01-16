@@ -18,12 +18,12 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['joueur:read'])]
+    #[Groups(['rencontre:read', 'joueur:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
-    #[Groups(['joueur:read', 'joueur:write'])]
+    #[Groups(['rencontre:read', 'joueur:read', 'joueur:write'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, unique: true)]

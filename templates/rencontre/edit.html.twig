@@ -1,0 +1,41 @@
+{# templates/rencontre/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ rencontre.id ? 'Modifier le match' : 'Créer un nouveau match' }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-2xl font-bold mb-6">{{ rencontre.id ? 'Modifier le match' : 'Créer un nouveau match' }}</h1>
+
+    {{ form_start(form, { attr: { class: 'space-y-4' } }) }}
+
+        {# Joueur 1 #}
+        {{ form_row(form.joueur1, {
+            label: 'Joueur 1',
+            attr: {
+                class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+            }
+        }) }}
+
+        {# Joueur 2 #}
+        {{ form_row(form.joueur2, {
+            label: 'Joueur 2',
+            attr: {
+                class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+            }
+        }) }}
+
+        {# Gagnant #}
+        {{ form_row(form.gagnant, {
+            label: 'Gagnant (optionnel)',
+            attr: {
+                class: 'mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm'
+            }
+        }) }}
+
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            {{ rencontre.id ? 'Mettre à jour' : 'Créer le match' }}
+        </button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

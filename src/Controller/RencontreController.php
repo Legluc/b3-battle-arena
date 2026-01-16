@@ -28,16 +28,17 @@ class RencontreController extends AbstractController
     #[Route('/{id}', name: 'rencontre_show', methods: ['GET'])]
     public function show(Rencontre $rencontre): Response
     {
-        return $this->render('rencontre/show.html.twig', [
+        return $this->render('rencontre/index.html.twig', [
             'rencontre' => $rencontre,
         ]);
     }
 
     // Créer un match
-    #[Route('/new', name: 'rencontre_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN', message: 'Vous devez être un connecté en tant que administrateur pour effectué cette action.')]
+    #[Route('/rencontre/new', name: 'rencontre_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous devez être connecté en tant qu\'administrateur pour effectuer cette action.')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Crée une nouvelle instance de Rencontre
         $rencontre = new Rencontre();
         $form = $this->createForm(RencontreType::class, $rencontre);
         $form->handleRequest($request);
@@ -46,11 +47,10 @@ class RencontreController extends AbstractController
             $entityManager->persist($rencontre);
             $entityManager->flush();
 
-            return $this->redirectToRoute('rencontre_index');
+            return $this->redirectToRoute('rencontre_show', ['id' => $rencontre->getId()]);
         }
 
         return $this->render('rencontre/new.html.twig', [
-            'rencontre' => $rencontre,
             'form' => $form->createView(),
         ]);
     }
@@ -66,7 +66,7 @@ class RencontreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('rencontre_index');
+            return $this->redirectToRoute('rencontre_show', ['id' => $rencontre->getId()]);
         }
 
         return $this->render('rencontre/edit.html.twig', [
