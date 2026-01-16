@@ -33,7 +33,6 @@ security:
         main:
             lazy: true
             provider: joueur_provider
-            # stateless: true  # À activer si tu utilises uniquement JWT
             form_login:
                 login_path: app_login
                 check_path: app_login

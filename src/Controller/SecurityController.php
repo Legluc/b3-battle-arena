@@ -34,39 +34,6 @@ class SecurityController extends AbstractController
                 if (!$user instanceof Joueur) {
                     throw new \RuntimeException('L\'utilisateur connecté n\'est pas un Joueur.');
                 }
-
-                // Appelle la route API /api/login pour générer le token JWT
-                try {
-                    $response = $httpClient->request('POST', '/api/login', [
-                        'json' => [
-                            'mail' => $user->getUserIdentifier(),
-                            'password' => $request->request->get('password'), // Attention : à utiliser avec précaution
-                        ],
-                    ]);
-
-                    $data = $response->toArray();
-                    $token = $data['token'];
-
-                    $logger->info('JWT généré via /api/login : ' . $token);
-
-                    // Crée une réponse de redirection avec le cookie
-                    $response = $this->redirectToRoute('app_joueur_show', ['id' => $user->getId()]);
-                    $response->headers->setCookie(new Cookie(
-                        'BEARER',
-                        $token,
-                        time() + 3600, // 1 heure
-                        '/',
-                        null,
-                        true,  // HttpOnly
-                        true   // Secure (nécessite HTTPS)
-                    ));
-
-                    $logger->info('Cookie BEARER ajouté à la réponse.');
-                    return $response;
-                } catch (\Exception $e) {
-                    $logger->error('Erreur lors de la génération du token JWT : ' . $e->getMessage());
-                    // Gère l'erreur (ex : affiche un message à l'utilisateur)
-                }
             }
         }
 
