@@ -15,7 +15,7 @@ class Rencontre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['rencontre:read'])]
+    #[Groups(['rencontre:read', 'resultat:read'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Joueur::class, inversedBy: 'rencontres')]

@@ -9,17 +9,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Joueur;
-use Psr\Log\LoggerInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
     public function login(
         AuthenticationUtils $authenticationUtils,
-        LoggerInterface $logger,
         Request $request,
-        HttpClientInterface $httpClient
     ): Response {
 
         // Récupère l'erreur de login s'il y en a une

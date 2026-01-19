@@ -48,12 +48,16 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Rencontre>
      */
-    #[ORM\OneToMany(targetEntity: Rencontre::class, mappedBy: 'joueur1')]
-    private Collection $rencontres;
+    #[ORM\OneToMany(mappedBy: 'joueur1', targetEntity: Rencontre::class)]
+    private Collection $rencontresJoueur1;
+
+    #[ORM\OneToMany(mappedBy: 'joueur2', targetEntity: Rencontre::class)]
+    private Collection $rencontresJoueur2;
 
     public function __construct()
     {
-        $this->rencontres = new ArrayCollection();
+        $this->rencontresJoueur1 = new ArrayCollection();
+        $this->rencontresJoueur2 = new ArrayCollection();
         $this->roles = ['ROLE_PLAYER'];
     }
 
@@ -132,28 +136,67 @@ class Joueur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+  /**
+     * @return Collection<int, Rencontre>
+     */
+    public function getRencontresJoueur1(): Collection
+    {
+        return $this->rencontresJoueur1;
+    }
+
     /**
      * @return Collection<int, Rencontre>
      */
-    public function getRencontres(): Collection
+    public function getRencontresJoueur2(): Collection
     {
-        return $this->rencontres;
+        return $this->rencontresJoueur2;
     }
 
-    public function addRencontre(Rencontre $rencontre): static
+    /**
+     * Retourne toutes les rencontres (en tant que joueur1 ou joueur2)
+     * @return Collection<int, Rencontre>
+     */
+    public function getAllRencontres(): Collection
     {
-        if (!$this->rencontres->contains($rencontre)) {
-            $this->rencontres->add($rencontre);
+        return new ArrayCollection(array_merge(
+            $this->rencontresJoueur1->toArray(),
+            $this->rencontresJoueur2->toArray()
+        ));
+    }
+
+    public function addRencontreJoueur1(Rencontre $rencontre): static
+    {
+        if (!$this->rencontresJoueur1->contains($rencontre)) {
+            $this->rencontresJoueur1->add($rencontre);
             $rencontre->setJoueur1($this);
         }
         return $this;
     }
 
-    public function removeRencontre(Rencontre $rencontre): static
+    public function addRencontreJoueur2(Rencontre $rencontre): static
     {
-        if ($this->rencontres->removeElement($rencontre)) {
+        if (!$this->rencontresJoueur2->contains($rencontre)) {
+            $this->rencontresJoueur2->add($rencontre);
+            $rencontre->setJoueur2($this);
+        }
+        return $this;
+    }
+
+    public function removeRencontreJoueur1(Rencontre $rencontre): static
+    {
+        if ($this->rencontresJoueur1->removeElement($rencontre)) {
             if ($rencontre->getJoueur1() === $this) {
                 $rencontre->setJoueur1(null);
+            }
+        }
+        return $this;
+    }
+
+    public function removeRencontreJoueur2(Rencontre $rencontre): static
+    {
+        if ($this->rencontresJoueur2->removeElement($rencontre)) {
+            if ($rencontre->getJoueur2() === $this) {
+                $rencontre->setJoueur2(null);
             }
         }
         return $this;

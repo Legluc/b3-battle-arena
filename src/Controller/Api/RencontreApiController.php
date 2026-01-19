@@ -54,10 +54,20 @@ class RencontreApiController extends AbstractController
             return new JsonResponse(['error' => 'Un ou plusieurs joueurs n\'existent pas.'], 404);
         }
 
+        $gagnantId = $data['gagnant'] ?? null;
+        $gagnant = $gagnantId ? $joueurRepository->find($gagnantId) : null; 
+
         // Création de la rencontre et association des joueurs
         $rencontre = new Rencontre();
         $rencontre->setJoueur1($joueur1);
         $rencontre->setJoueur2($joueur2);
+
+        // Assignation du gagnant
+        if ($gagnant && ($gagnant->getId() === $joueur1->getId() || $gagnant->getId() === $joueur2->getId())) {
+            $rencontre->setGagnant($gagnant);
+        } else {
+            return new JsonResponse(['error' => 'Le gagnant spécifié n\'est pas valide.'], 400);
+        }
 
         // Persist et flush
         $entityManager->persist($rencontre);
