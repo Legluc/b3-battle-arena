@@ -9,7 +9,8 @@
         <div class="mb-6">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Matchs</h2>
             {% for resultat in resultats %}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="w-full flex items-start gap-[20px]">
+                <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <p class="text-gray-600 font-medium">Joueur 1</p>
                         <p class="text-lg font-bold text-blue-600">
@@ -30,6 +31,13 @@
                         </p>
                     </div>
                 </div>
+                {% if app.user %}
+                    <a href="{{ path('resultat_show', {'id': resultat.id}) }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-nowrap focus:outline-none focus:shadow-outline">
+                        Voir plus
+                    </a>
+                {% endif %}
+            </div>
             {% endfor %}
         </div>
     </div>

@@ -28,7 +28,7 @@ class RencontreController extends AbstractController
     #[Route('/{id}', name: 'rencontre_show', methods: ['GET'])]
     public function show(Rencontre $rencontre): Response
     {
-        return $this->render('rencontre/index.html.twig', [
+        return $this->render('rencontre/show.html.twig', [
             'rencontre' => $rencontre,
         ]);
     }

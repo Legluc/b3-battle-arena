@@ -1,0 +1,47 @@
+<nav class="bg-gray-800 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    {# <a href="{{ path('app_home') }}" class="text-xl font-bold text-white">
+                        Shifumi Tournament
+                    </a> #}
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        {# <a href="{{ path('app_home') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Accueil
+                        </a> #}
+                        <a href="{{ path('app_joueur_index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Liste des joueurs
+                        </a>
+                        <a href="{{ path('rencontre_index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Liste des matchs
+                        </a>
+                        <a href="{{ path('resultat_index') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Liste des résultats
+                        </a>
+                        {% if app.user %}
+                        <a href="{{ path('app_joueur_show', {'id': app.user.id}) }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Mon compte
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-4 flex items-center md:ml-6">
+                    {% if app.user %}
+                        <a href="{{ path('app_logout') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Déconnexion
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+                            Connexion
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

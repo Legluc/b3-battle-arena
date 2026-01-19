@@ -29,7 +29,7 @@ class Resultat
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     #[Groups(['resultat:read'])]
-    private ?Rencontre $Rencontre = null;
+    private ?Rencontre $rencontre = null;
 
     public function getId(): ?int
     {
@@ -62,12 +62,12 @@ class Resultat
 
     public function getRencontre(): ?Rencontre
     {
-        return $this->Rencontre;
+        return $this->rencontre;
     }
 
-    public function setRencontre(Rencontre $Rencontre): static
+    public function setRencontre(Rencontre $rencontre): static
     {
-        $this->Rencontre = $Rencontre;
+        $this->rencontre = $rencontre;
 
         return $this;
     }

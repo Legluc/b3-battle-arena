@@ -42,13 +42,19 @@
 
         <div class="flex justify-end space-x-4">
             <a href="{{ path('resultat_index') }}"
-               class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+               class="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
                 Retour à la liste
             </a>
-                <a href="{{ path('resultat_edit', {'id': resultat.id}) }}"
-                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
-                    Modifier
-                </a>
+            <a href="{{ path('resultat_edit', {'id': resultat.id}) }}"
+                class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+                Modifier
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('resultat_delete', {'id': resultat.id}) }}"
+                class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+                Supprimer
+            </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

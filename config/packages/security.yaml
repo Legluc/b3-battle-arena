@@ -51,11 +51,10 @@ security:
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/joueur/\d+, roles: ROLE_PLAYER }
+        - { path: ^/joueur/\d+, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
-        - { path: ^/api/tournois/public, roles: PUBLIC_ACCESS }
         - { path: ^/api/joueurs, roles:  PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 

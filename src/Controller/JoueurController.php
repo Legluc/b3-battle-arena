@@ -6,6 +6,7 @@ use App\Entity\Joueur;
 use App\Form\JoueurType;
 use App\Form\JoueurEditType;
 use App\Repository\JoueurRepository;
+use App\Repository\ResultatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,10 +48,13 @@ class JoueurController extends AbstractController
 
     // Afficher un joueur (READ)
     #[Route('/{id}', name: 'app_joueur_show', requirements: ['id' => '\d+'])]
-    public function show(Joueur $joueur): Response
+    public function show(Joueur $joueur, ResultatRepository $resultatRepository): Response
     {        
-        return $this->render('joueur/index.html.twig', [
+        $resultats = $resultatRepository->findByJoueur($joueur);
+
+        return $this->render('joueur/show.html.twig', [
             'joueur' => $joueur,
+            'resultats' => $resultats,
         ]);
     }
 

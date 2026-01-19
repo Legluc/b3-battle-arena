@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mx-auto p-4 max-w-md">
+    <h1 class="text-2xl font-bold mb-6">Mon compte</h1>
+
+    {# Informations du joueur #}
+    <div class="mb-6 p-4 bg-gray-100 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">Mes informations</h2>
+        <p><strong>Nom :</strong> {{ joueur.nom }}</p>
+        <p><strong>Email :</strong> {{ joueur.mail }}</p>
+        <p><strong>Date de naissance :</strong> {{ joueur.ddn|date('d/m/Y') }}</p>
+    </div>
+    <div class="my-6">
+        <a href="{{ path('app_joueur_edit', {'id': joueur.id}) }}" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 block text-center">
+            Modifier mes informations
+        </a>
+    </div>
+
+    {# Résultats des matchs #}
+    <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+        <h2 class="text-xl font-semibold mb-2">Mes matchs</h2>
+        {% if resultats|length > 0 %}
+            {% for resultat in resultats %}
+                <div class="mb-4 p-3 bg-white rounded-lg shadow-sm">
+                    <p><strong>Match contre :</strong>
+                        {% if resultat.rencontre.joueur1.id == joueur.id %}
+                            {{ resultat.rencontre.joueur2.nom }}
+                        {% else %}
+                            {{ resultat.rencontre.joueur1.nom }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Score :</strong>
+                        {% if resultat.rencontre.joueur1.id == joueur.id %}
+                            {{ resultat.scoreJoueur1 }} - {{ resultat.scoreJoueur2 }}
+                        {% else %}
+                            {{ resultat.scoreJoueur2 }} - {{ resultat.scoreJoueur1 }}
+                        {% endif %}
+                    </p>
+                    <p><strong>Résultat :</strong>
+                        {% if resultat.rencontre.joueur1.id == joueur.id %}
+                            {% if resultat.scoreJoueur1 > resultat.scoreJoueur2 %}
+                                Victoire
+                            {% elseif resultat.scoreJoueur1 < resultat.scoreJoueur2 %}
+                                Défaite
+                            {% else %}
+                                Match nul
+                            {% endif %}
+                        {% else %}
+                            {% if resultat.scoreJoueur2 > resultat.scoreJoueur1 %}
+                                Victoire
+                            {% elseif resultat.scoreJoueur2 < resultat.scoreJoueur1 %}
+                                Défaite
+                            {% else %}
+                                Match nul
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    <a href="{{ path('resultat_edit', {'id': resultat.id}) }}" class="w-full bg-blue-600 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-700 block text-center">
+                        Modifier le score
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucun match joué pour le moment.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
