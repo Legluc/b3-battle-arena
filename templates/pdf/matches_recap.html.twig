@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Récapitulatif des matchs</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Joueur 1</th>
+                <th>Joueur 2</th>
+                <th>Score Joueur 1</th>
+                <th>Score Joueur 2</th>
+                <th>Joueur gagant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rencontre in rencontres %}
+                <tr>
+                    <td>{{ rencontre.joueur1.nom }}</td>
+                    <td>{{ rencontre.joueur2.nom }}</td>
+                    <td>{{ rencontre.resultat.scoreJoueur1 }}</td>
+                    <td>{{ rencontre.resultat.scoreJoueur2 }}</td>
+                    <td>{{ rencontre.gagant.nom }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
