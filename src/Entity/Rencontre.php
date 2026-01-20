@@ -34,7 +34,7 @@ class Rencontre
     #[Groups(['rencontre:read', 'rencontre:write'])]
     private ?Joueur $gagnant = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?string $pdfLink = null;
 
     public function validateJoueurs(ExecutionContextInterface $context)

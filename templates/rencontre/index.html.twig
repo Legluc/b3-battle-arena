@@ -25,5 +25,10 @@
         {% endif %}
     </div>
     {% endfor %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('rencontre_new') }}" class="bg-blue-600 text-white py-2 px-4 rounded-md text-nowrap hover:bg-blue-700">
+            Ajouter un match
+        </a>
+    {% endif %}
 </div>
 {% endblock %}
