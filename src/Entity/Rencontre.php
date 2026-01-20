@@ -34,6 +34,9 @@ class Rencontre
     #[Groups(['rencontre:read', 'rencontre:write'])]
     private ?Joueur $gagnant = null;
 
+    #[ORM\Column]
+    private ?string $pdfLink = null;
+
     public function validateJoueurs(ExecutionContextInterface $context)
     {
         if ($this->getJoueur1() === $this->getJoueur2()) {
@@ -80,6 +83,17 @@ class Rencontre
     public function setGagnant(?Joueur $gagnant): static
     {
         $this->gagnant = $gagnant;
+
+        return $this;
+    }
+    public function getPdfLink(): ?string
+    {
+        return $this->pdfLink;
+    }
+
+    public function setPdfLink(string $pdfLink): static
+    {
+        $this->pdfLink = $pdfLink;
 
         return $this;
     }

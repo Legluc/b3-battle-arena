@@ -11,19 +11,15 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class GeneratorPdfHandler
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
         private PdfGenerator $pdfService,
+        private EntityManagerInterface $entityManager
     ) {}
 
-    public function __invoke(GeneratorPdfMessage $message)
+    public function __invoke(GeneratorPdfMessage $message): void
     {
-        // Récupérer les rencontres depuis la base de données
-        $rencontres = $this->entityManager
-            ->getRepository('App\Entity\Rencontre')
-            ->findAll();
+        // Récupère le lien du PDF depuis le message
+        $pdfLink = $message->pdfLink;
 
-        // Générer le PDF
-        $filename = $this->pdfService->generatorPdf($rencontres);
 
     }
 }
